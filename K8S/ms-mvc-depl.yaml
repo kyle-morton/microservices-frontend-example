@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-mvc-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-mvc
+  template:
+    metadata:
+      labels:
+        app: ms-mvc
+    spec:
+      containers:
+        - name: ms-mvc
+          image: kylemorton5770/ms-mvc:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-mvc-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: ms-mvc
+  ports:
+  - name: ms-mvc
+    protocol: TCP
+    port: 8080 # inside the cluster
+    targetPort: 8080 # # matching port on outside
