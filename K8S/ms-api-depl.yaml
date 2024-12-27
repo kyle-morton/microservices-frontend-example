@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-api-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-api
+  template:
+    metadata:
+      labels:
+        app: ms-api
+    spec:
+      containers:
+        - name: ms-api
+          image: kylemorton5770/ms-api:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-api-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: ms-api
+  ports:
+  - name: ms-api
+    protocol: TCP
+    port: 8080 # inside the cluster
+    targetPort: 8080 # # matching port on outside
