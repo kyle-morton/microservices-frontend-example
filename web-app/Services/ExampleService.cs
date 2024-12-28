@@ -32,9 +32,6 @@ public class ExampleService : IExampleService
             if (response.IsSuccessStatusCode)
             {
                 var responseData = await response.Content.ReadAsStringAsync();
-                Console.WriteLine("Response Data:");
-                Console.WriteLine(responseData);
-
                 posts = JsonSerializer.Deserialize<List<UserPost>>(responseData);
             }
             else
